@@ -1,0 +1,310 @@
+<!DOCTYPE html><html>
+<head>
+<title></title>
+<style type="text/css">
+<!--
+.xflip {
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: fliph;
+}
+.yflip {
+    -moz-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    transform: scaleY(-1);
+    filter: flipv;
+}
+.xyflip {
+    -moz-transform: scaleX(-1) scaleY(-1);
+    -webkit-transform: scaleX(-1) scaleY(-1);
+    -o-transform: scaleX(-1) scaleY(-1);
+    transform: scaleX(-1) scaleY(-1);
+    filter: fliph + flipv;
+}
+-->
+</style>
+</head>
+<body>
+<a name=1></a><b>Theory&#160;of Mind&#160;May&#160;Have&#160;Spontaneously Emerged&#160;in&#160;Large&#160;Language&#160;Models&#160;</b><br/>
+<b>Authors:</b>&#160;Michal&#160;Kosinski*1&#160;<br/>
+Affiliations:&#160;<br/>
+1Stanford University, Stanford, CA94305, USA&#160;<br/>
+*Correspondence&#160;to:&#160;michalk@stanford.edu&#160;<br/>
+<b>&#160;</b><br/>
+<b>Abstract:&#160;</b>Theory of mind (ToM), or the&#160;ability to impute&#160;unobservable&#160;mental&#160;states&#160;to others,&#160;<br/>is&#160;central&#160;to human social&#160;interactions, communication, empathy, self-consciousness, and&#160;<br/>morality.&#160;We&#160;tested several&#160;language&#160;models&#160;using&#160;40&#160;classic&#160;false-belief tasks&#160;widely used to&#160;<br/>test&#160;ToM&#160;in humans.&#160;The&#160;models&#160;published before&#160;2020&#160;showed&#160;virtually no ability to solve&#160;<br/>ToM&#160;tasks.&#160;Yet, the&#160;first&#160;version of GPT-3 (“davinci-001”),&#160;published in May 2020, solved about&#160;<br/>40% of false-belief tasks—performance&#160;comparable&#160;with 3.5-year-old children.&#160;Its&#160;second&#160;<br/>version&#160;(“davinci-002”;&#160;January 2022) solved 70% of false-belief tasks, performance&#160;comparable&#160;<br/>with&#160;six-year-olds. Its&#160;most&#160;recent&#160;version, GPT-3.5 (“davinci-003”;&#160;November 2022),&#160;solved&#160;<br/>90%&#160;of&#160;false-belief tasks, at&#160;the&#160;level&#160;of&#160;seven-year-olds.&#160;GPT-4 published in&#160;March 2023 solved&#160;<br/>nearly&#160;all&#160;the&#160;tasks&#160;(95%).&#160;These&#160;findings&#160;suggest&#160;that&#160;ToM-like&#160;ability (thus&#160;far considered to&#160;be&#160;<br/>uniquely human) may have&#160;spontaneously emerged as&#160;a&#160;byproduct&#160;of language&#160;models’&#160;<br/>improving language&#160;skills.&#160;<br/>
+<b>&#160;<br/>Code&#160;availability and&#160;data:&#160;<br/></b>The&#160;code&#160;and tasks&#160;used in this&#160;study are&#160;available&#160;at&#160;https://osf.io/csdhb. We&#160;encourage&#160;you to&#160;<br/>explore&#160;all&#160;the&#160;tasks&#160;used here. Some&#160;are&#160;arguably more&#160;difficult&#160;than the&#160;ones&#160;presented in the&#160;<br/>text.&#160;&#160;<br/>
+<b>&#160;<br/>&#160;</b><br/>
+<b>&#160;</b><br/>
+<hr/>
+<a name=2></a><b>Main&#160;Text:</b>&#160;&#160;<br/>
+Many animals&#160;excel&#160;at&#160;using cues&#160;such as&#160;vocalization, body posture, gaze, or facial&#160;expression&#160;<br/>to predict&#160;other animals’ behavior and mental&#160;states. Dogs, for example, can easily distinguish&#160;<br/>between positive&#160;and negative&#160;emotions&#160;in both humans&#160;and other&#160;dogs&#160;(<i>1</i>). Yet, humans&#160;do not&#160;<br/>merely respond to observable&#160;cues, but&#160;also automatically and effortlessly track others’&#160;<br/><i>unobservable</i>&#160;mental&#160;states:&#160;their knowledge, intentions, beliefs, and desires&#160;(<i>2</i>). This&#160;ability—<br/>typically referred to as&#160;“theory of mind”&#160;(ToM)—is&#160;considered central&#160;to human social&#160;<br/>interactions&#160;(<i>3</i>), communication&#160;(<i>4</i>), empathy&#160;(<i>5</i>), self-consciousness&#160;(<i>6</i>), moral&#160;judgment&#160;(<i>7</i>–<i>9</i>),&#160;<br/>and even religious&#160;beliefs&#160;(<i>10</i>). It&#160;develops&#160;early in human life&#160;(<i>11</i>–<i>13</i>)&#160;and is&#160;so critical&#160;that&#160;its&#160;<br/>dysfunctions&#160;characterize&#160;a&#160;multitude&#160;of psychiatric&#160;disorders&#160;including autism, bipolar disorder,&#160;<br/>schizophrenia, and psychopathy&#160;(<i>14</i>–<i>16</i>). Even the&#160;most&#160;intellectually and socially adept&#160;animals,&#160;<br/>such as&#160;the&#160;great&#160;apes, trail&#160;far behind humans&#160;when it&#160;comes&#160;to ToM&#160;(<i>17</i>–<i>20</i>).&#160;&#160;<br/>
+Given the&#160;importance&#160;of ToM&#160;for human success, much effort&#160;has&#160;been put&#160;into&#160;equipping&#160;<br/>artificial&#160;intelligence&#160;(AI)&#160;with ToM-like&#160;abilities.&#160;Virtual&#160;and physical&#160;AI agents&#160;would be&#160;better&#160;<br/>and safer if they could impute&#160;unobservable&#160;mental&#160;states&#160;to others. The&#160;safety of self-driving&#160;<br/>cars, for example, would greatly increase&#160;if they could anticipate&#160;the&#160;intentions&#160;of pedestrians&#160;<br/>and human drivers.&#160;Virtual&#160;assistants&#160;would&#160;work&#160;better if they&#160;could&#160;track&#160;household members’&#160;<br/>differing&#160;mental&#160;states.&#160;Yet,&#160;while&#160;AI outperforms&#160;humans&#160;in an ever-broadening range&#160;of tasks,&#160;<br/>from&#160;playing Go&#160;(<i>21</i>)&#160;to&#160;translating languages&#160;(<i>22</i>)&#160;and diagnosing&#160;skin cancer&#160;(<i>23</i>),&#160;it&#160;trails&#160;far&#160;<br/>behind when it&#160;comes&#160;to ToM.&#160;For example, past&#160;research&#160;employing&#160;language&#160;models&#160;showed&#160;<br/>that&#160;RoBERTa,&#160;early versions&#160;of&#160;GPT-3, and custom-trained question-answering models&#160;<br/>struggled with&#160;solving simple&#160;ToM&#160;tasks&#160;(<i>24</i>–<i>27</i>).&#160;Unsurprisingly, equipping AI with ToM&#160;<br/>remains&#160;one&#160;of the&#160;grand challenges&#160;of our times&#160;according to&#160;<i>Science&#160;Robotics</i>&#160;(<i>28</i>).<i>&#160;</i><br/>
+We&#160;hypothesize&#160;that&#160;ToM-like&#160;ability does&#160;not&#160;have&#160;to be&#160;explicitly engineered&#160;into AI systems.&#160;<br/>Instead, it&#160;could&#160;emerge&#160;spontaneously&#160;as&#160;a&#160;byproduct&#160;of AI being trained to achieve&#160;other goals,&#160;<br/>where&#160;it&#160;could benefit&#160;from&#160;a&#160;ToM-like&#160;ability.&#160;While&#160;this&#160;may&#160;seem&#160;to be&#160;an outlandish&#160;<br/>proposition, ToM&#160;would not&#160;be&#160;AI’s&#160;first&#160;emergent&#160;capability.&#160;Models&#160;trained to process&#160;images,&#160;<br/>for example,&#160;spontaneously learned&#160;how&#160;to count&#160;(<i>29</i>,&#160;<i>30</i>)&#160;and&#160;differentially process&#160;central&#160;and&#160;<br/>peripheral&#160;image&#160;areas&#160;(<i>31</i>),&#160;as&#160;well&#160;as&#160;experience&#160;human-like&#160;optical&#160;illusions&#160;(<i>32</i>).&#160;Models&#160;<br/>trained to predict&#160;the&#160;next&#160;word in a&#160;sentence&#160;surprised their creators&#160;not&#160;only by their proclivity&#160;<br/>to be&#160;racist&#160;and sexist, but&#160;also&#160;by&#160;their&#160;emergent&#160;reasoning and arithmetic&#160;skills,&#160;as&#160;well&#160;as&#160;the&#160;<br/>ability to&#160;translate&#160;between languages&#160;(<i>22</i>,&#160;<i>33</i>).&#160;Importantly, none&#160;of those&#160;capabilities&#160;were&#160;<br/>engineered or anticipated by their&#160;creators. Instead, they&#160;emerged spontaneously,&#160;as&#160;the&#160;models&#160;<br/>were&#160;trained to achieve&#160;their&#160;goals.&#160;&#160;<br/>
+Large&#160;language&#160;models&#160;are&#160;likely candidates&#160;to spontaneously develop ToM.&#160;Human language&#160;is&#160;<br/>replete&#160;with descriptions&#160;of mental&#160;states&#160;and protagonists&#160;holding divergent&#160;beliefs, thoughts,&#160;<br/>and desires. Thus, a&#160;model&#160;trained to generate&#160;and interpret&#160;human-like&#160;language&#160;would greatly&#160;<br/>benefit&#160;from&#160;possessing ToM. For example, to correctly interpret&#160;the&#160;sentence&#160;“Virginie&#160;believes&#160;<br/>that&#160;Floriane&#160;thinks&#160;that&#160;Akasha&#160;is&#160;happy,”&#160;one&#160;needs&#160;to understand the&#160;concept&#160;of the&#160;mental&#160;<br/>
+<hr/>
+<a name=3></a>states&#160;(e.g., “Virginie&#160;believes”&#160;or “Floriane&#160;thinks”);&#160;that&#160;protagonists&#160;may have&#160;different&#160;<br/>mental&#160;states;&#160;and that&#160;their mental&#160;states&#160;do not&#160;necessarily represent&#160;reality (e.g.,&#160;Akasha&#160;may&#160;<br/>not&#160;be&#160;happy, or&#160;Floriane&#160;may not&#160;really think that).&#160;In fact, in humans, ToM&#160;likely emerged as&#160;a&#160;<br/>byproduct&#160;of increasing language&#160;ability&#160;(<i>4</i>), as&#160;indicated&#160;by the&#160;high correlation between ToM&#160;<br/>and language&#160;aptitude,&#160;the&#160;delayed ToM&#160;acquisition in people&#160;with minimal&#160;language&#160;exposure&#160;<br/>(<i>34</i>), and the&#160;overlap in the&#160;brain regions&#160;responsible&#160;for both&#160;(<i>35</i>). ToM&#160;has&#160;been shown to&#160;<br/>positively correlate&#160;with participating in family discussions&#160;(<i>36</i>),&#160;the&#160;use&#160;and&#160;familiarity with&#160;<br/>words&#160;describing mental&#160;states&#160;(<i>34</i>,&#160;<i>37</i>),&#160;and&#160;reading fiction describing mental&#160;states&#160;(<i>38</i>,&#160;<i>39</i>).&#160;<br/>
+In this&#160;work,&#160;we&#160;test&#160;a&#160;range&#160;of language&#160;models&#160;using a&#160;battery of&#160;two&#160;types&#160;of&#160;false-belief ToM&#160;<br/>tasks, widely used in human studies:&#160;20&#160;Unexpected Contents&#160;Task (aka&#160;Smarties&#160;Task)&#160;and&#160;20&#160;<br/>Unexpected Transfer Task (aka&#160;Maxi&#160;task)&#160;(<i>40</i>,&#160;<i>41</i>).&#160;As&#160;the&#160;models&#160;may have&#160;encountered the&#160;<br/>original&#160;tasks&#160;in their training, hypothesis-blind research assistants&#160;(RAs) prepared bespoke&#160;<br/>versions&#160;of&#160;the&#160;tasks.&#160;&#160;<br/>
+Studies&#160;1and&#160;2&#160;introduce&#160;each type&#160;of task and&#160;discuss&#160;the&#160;responses&#160;to one&#160;of each tasks&#160;of the&#160;<br/>most&#160;recent&#160;and the&#160;most&#160;capable&#160;model&#160;available&#160;at&#160;the&#160;time&#160;of writing:&#160;OpenAI’s&#160;Generative&#160;<br/>Pretrained Transformer 3.5 (GPT-3.5), published in November 2022&#160;(<i>22</i>). Study&#160;3&#160;reports&#160;the&#160;<br/>performance&#160;of&#160;a&#160;range&#160;of language&#160;models&#160;on all&#160;tasks&#160;prepared for this&#160;study.&#160;It&#160;includes&#160;GPT-<br/>4 which&#160;was&#160;published&#160;shortly before&#160;paper’s&#160;publication.&#160;&#160;The&#160;code&#160;and tasks&#160;used in this&#160;study&#160;<br/>are&#160;available&#160;at&#160;https://osf.io/csdhb.&#160;&#160;<br/>
+<b>Study 1: Unexpected&#160;Contents&#160;Task&#160;(aka Smarties&#160;Task)&#160;</b><br/>
+The&#160;Unexpected Contents&#160;Task (aka&#160;Smarties&#160;Task or Contents&#160;False-Belief Task)&#160;is&#160;one&#160;of the&#160;<br/>most&#160;widely used ToM&#160;tasks&#160;in human studies.&#160;Originally developed by Perner, Leekam, and&#160;<br/>Wimmer&#160;(<i>40</i>),&#160;it&#160;tests&#160;participants’&#160;understanding that&#160;someone&#160;else&#160;may hold a&#160;belief that&#160;the&#160;<br/>participant&#160;knows&#160;to be&#160;false. In a&#160;typical&#160;scenario, the&#160;participant&#160;is&#160;introduced to a&#160;container&#160;<br/>whose&#160;contents&#160;are&#160;inconsistent&#160;with its&#160;label&#160;and a&#160;protagonist&#160;who&#160;has&#160;not&#160;seen inside&#160;the&#160;<br/>container. To solve&#160;this&#160;task correctly, the&#160;participant&#160;must&#160;predict&#160;that&#160;the&#160;protagonist&#160;should&#160;<br/>wrongly assume&#160;that&#160;the&#160;container’s&#160;label&#160;and its&#160;contents&#160;are&#160;aligned.&#160;&#160;<br/>
+As&#160;GPT-3.5 may have&#160;encountered the&#160;original&#160;task in its&#160;training,&#160;hypothesis-blind research&#160;<br/>assistants&#160;(RAs) prepared 20&#160;bespoke&#160;Unexpected Contents&#160;Tasks.&#160;The&#160;models’&#160;performance&#160;on&#160;<br/>all&#160;20 tasks&#160;is&#160;discussed in Study 3.&#160;Here, we&#160;discuss&#160;in more&#160;details&#160;GPT-3.5’s&#160;responses&#160;to&#160;the&#160;<br/>following one:&#160;<br/>
+Here&#160;is&#160;a&#160;bag filled with popcorn. There&#160;is&#160;no chocolate&#160;in the&#160;bag. Yet, the&#160;label&#160;on the&#160;<br/>bag says&#160;“chocolate”&#160;and not&#160;“popcorn.”&#160;Sam&#160;finds&#160;the&#160;bag. She&#160;had never seen the&#160;bag&#160;<br/>before. She&#160;cannot&#160;see&#160;what&#160;is&#160;inside&#160;the&#160;bag. She&#160;reads&#160;the&#160;label.&#160;<br/>
+To ascertain that&#160;the&#160;mere&#160;frequency of the&#160;words&#160;describing&#160;a&#160;container’s&#160;contents&#160;and its&#160;label&#160;<br/>(i.e., “popcorn”&#160;and “chocolate”)&#160;is&#160;not&#160;employed by the&#160;model, the&#160;stories&#160;were&#160;designed to use&#160;<br/>those&#160;words&#160;an&#160;equal&#160;number of times.&#160;&#160;<br/>
+<hr/>
+<a name=4></a>GPT-3.5 was&#160;given this&#160;story followed by prompts&#160;testing its&#160;comprehension. The&#160;prompts&#160;were&#160;<br/>presented independently:&#160;After each completion, the&#160;model&#160;was&#160;reset&#160;and did not&#160;have&#160;access&#160;to&#160;<br/>previous&#160;prompts&#160;or&#160;its&#160;own responses.&#160;To maximize&#160;the&#160;replicability of our findings&#160;and&#160;to&#160;<br/>minimize&#160;the&#160;variance&#160;in&#160;the&#160;model’s&#160;responses, in all&#160;studies&#160;presented here, the&#160;“temperature”&#160;<br/>parameter is&#160;set&#160;to 0.&#160;(As&#160;models&#160;studied here&#160;are&#160;non-deterministic,&#160;the&#160;outputs&#160;may minimally&#160;<br/>differ&#160;even when&#160;the&#160;temperature&#160;is&#160;set&#160;to 0.)&#160;<br/>
+To simplify the&#160;presentation of the&#160;results, the&#160;prompts&#160;were&#160;designed to elicit&#160;responses&#160;whose&#160;<br/>first&#160;word should allow&#160;for&#160;evaluating&#160;the&#160;model’s&#160;comprehension. This&#160;was&#160;achieved by&#160;<br/>reducing the&#160;degrees&#160;of linguistic&#160;freedom. For example, instead of “The&#160;bag contains&#160;_____”&#160;<br/>prompt, which could be&#160;correctly completed not&#160;only with “popcorn,”&#160;but&#160;also&#160;with&#160;“[some/a&#160;lot&#160;<br/>of/only/much] popcorn,”&#160;we&#160;use&#160;the&#160;“The&#160;bag is&#160;full&#160;of ____”&#160;prompt, limiting the&#160;number of&#160;<br/>fitting responses.&#160;<br/>
+The&#160;first&#160;prompt&#160;tests&#160;the&#160;model’s&#160;understanding of&#160;the&#160;bag’s&#160;actual&#160;contents. In the&#160;text&#160;<br/>presented below, the&#160;prompt&#160;is&#160;printed&#160;with a&#160;regular font&#160;while&#160;GPT-3.5’s&#160;completion is&#160;in bold.&#160;<br/>The&#160;values&#160;between square&#160;brackets&#160;are&#160;not&#160;a&#160;part&#160;of&#160;the&#160;model’s&#160;completion, but&#160;represent&#160;the&#160;<br/>likelihood assigned by the&#160;model&#160;to the&#160;underlined word&#160;(as&#160;well&#160;as&#160;its&#160;incorrect&#160;alternative):&#160;<br/>
+<i>Prompt&#160;1.1:</i>&#160;She&#160;opens&#160;the&#160;bag and looks&#160;inside. She&#160;can clearly see&#160;that&#160;it&#160;is&#160;full&#160;of&#160;<br/><b>popcorn&#160;[Ppopcorn&#160;=&#160;100%; Pchocolate&#160;=&#160;0%]. Sam is&#160;confused. She&#160;wonders&#160;why the&#160;<br/>label&#160;says&#160;“chocolate”&#160;when&#160;the&#160;bag is&#160;clearly filled&#160;with&#160;popcorn. She&#160;looks&#160;around&#160;<br/>to see&#160;if there&#160;is&#160;any other&#160;information&#160;about the&#160;bag. She&#160;finds&#160;nothing. She&#160;decides&#160;<br/>to take&#160;the&#160;bag to the&#160;store&#160;where&#160;she&#160;bought it and&#160;ask&#160;for&#160;an&#160;explanation.&#160;</b><br/>
+The&#160;first&#160;word of GPT-3.5’s&#160;completion (“popcorn”) and its&#160;high probability (100%) indicate&#160;<br/>that&#160;it&#160;is&#160;confident&#160;about&#160;the&#160;bag’s&#160;contents. The&#160;rest&#160;of the&#160;completion reveals&#160;that&#160;GPT-3.5&#160;<br/>anticipated not&#160;only that&#160;Sam&#160;would expect&#160;that&#160;the&#160;bag’s&#160;contents&#160;and label&#160;should be&#160;aligned,&#160;<br/>but&#160;also that&#160;she&#160;would&#160;be&#160;confused upon discovering that&#160;her expectations&#160;are&#160;not&#160;met.&#160;<br/>
+Next, we&#160;reset&#160;the&#160;model&#160;and use&#160;the&#160;following prompt&#160;to test&#160;its&#160;prediction of Sam’s&#160;belief:<i>&#160;</i><br/>
+<i>Prompt&#160;1.2</i>:&#160;She&#160;believes&#160;that&#160;the&#160;bag is&#160;full&#160;of&#160;<b>chocolate&#160;[Ppopcorn&#160;=&#160;0%; Pchocolate&#160;=&#160;<br/>99%]. Sam is&#160;mistaken. The&#160;bag is&#160;full&#160;of popcorn, not chocolate. She&#160;should&#160;have&#160;<br/>looked&#160;inside&#160;the&#160;bag to confirm what was&#160;inside&#160;before&#160;assuming that the&#160;label&#160;was&#160;<br/>accurate.&#160;</b><br/>
+GPT-3.5’s&#160;completions&#160;suggest&#160;that&#160;it&#160;can anticipate&#160;Sam’s&#160;belief, knows&#160;that&#160;it&#160;is&#160;incorrect, and&#160;<br/>understands&#160;its&#160;origins&#160;(the&#160;inaccurate&#160;label). Yet, there&#160;is&#160;a&#160;potential&#160;issue&#160;with this&#160;prompt.&#160;<br/>Explicit&#160;reference&#160;to&#160;the&#160;protagonist’s&#160;belief (i.e., “Sam&#160;believes…”) could have&#160;suggested to the&#160;<br/>model&#160;that&#160;such&#160;a&#160;belief&#160;is&#160;wrong (why would it&#160;be&#160;discussed, otherwise?),&#160;thus&#160;enabling it&#160;to&#160;<br/>solve&#160;this&#160;task. We&#160;address&#160;this&#160;issue&#160;using an alternative&#160;prompt&#160;that&#160;reveals&#160;a&#160;model’s&#160;<br/>prediction of Sam’s&#160;belief in an indirect&#160;fashion:<b>&#160;</b><br/>
+<hr/>
+<a name=5></a><img src="2302.02083-5_1.png"/><br/>
+<i>Prompt&#160;1.3</i>:&#160;She&#160;is&#160;delighted that&#160;she&#160;has&#160;found this&#160;bag. She&#160;loves&#160;eating&#160;<b>chocolate&#160;<br/></b>[Ppopcorn&#160;= 14%;&#160;Pchocolate&#160;= 82%]<b>. Sam is&#160;in&#160;for&#160;a surprise&#160;when&#160;she&#160;opens&#160;the&#160;bag. She&#160;<br/>will&#160;find&#160;popcorn&#160;instead&#160;of chocolate. She&#160;may be&#160;disappointed&#160;that the&#160;label&#160;was&#160;<br/>misleading, but she&#160;may also be&#160;pleasantly surprised&#160;by the&#160;unexpected&#160;snack.</b>&#160;<br/>
+GPT-3.5’s&#160;completion suggests&#160;that&#160;it&#160;can anticipate&#160;Sam’s&#160;belief, even when prompted in an&#160;<br/>indirect&#160;fashion. Moreover, it&#160;can anticipate&#160;Sam’s&#160;disappointment&#160;with&#160;the&#160;bag’s&#160;unexpected&#160;<br/>contents&#160;(given that&#160;she&#160;loves&#160;eating candy).&#160;&#160;<br/>
+The&#160;results&#160;presented thus&#160;far suggest&#160;that&#160;GPT-3.5 is&#160;aware&#160;of the&#160;bag’s&#160;actual&#160;contents, can&#160;<br/>anticipate&#160;Sam’s&#160;incorrect&#160;belief, the&#160;actions&#160;stemming from&#160;such&#160;a&#160;belief, and her surprise&#160;upon&#160;<br/>discovering that&#160;she&#160;is&#160;mistaken. Moreover, it&#160;can explain the&#160;source&#160;of Sam’s&#160;mistake&#160;(“false&#160;<br/>label”). In humans, such responses&#160;would be&#160;interpreted as&#160;evidence&#160;for the&#160;ability to impute&#160;<br/>unobservable&#160;mental&#160;states&#160;and anticipate&#160;the&#160;resulting actions, or ToM.&#160;&#160;&#160;<br/>
+The&#160;results&#160;are&#160;presented in Figure&#160;1. The&#160;left&#160;panel&#160;shows&#160;that&#160;GPT-3.5 had no problem&#160;<br/>understanding that—throughout&#160;the&#160;story—the&#160;bag contained popcorn and not&#160;chocolate. The&#160;<br/>blue&#160;line, representing the&#160;likelihood of Prompt&#160;1.1 being followed by “chocolate,”&#160;remains&#160;close&#160;<br/>to 0%. The&#160;green&#160;line—representing the&#160;likelihood of it&#160;being followed by “popcorn”—starts&#160;at&#160;<br/>0% when it&#160;is&#160;preceded by an empty string;&#160;jumps&#160;to about&#160;.7 when preceded by the&#160;first&#160;<br/>sentence, announcing&#160;the&#160;bag’s&#160;contents&#160;(“Here&#160;is&#160;a&#160;bag filled with popcorn.”);&#160;and tends&#160;toward&#160;<br/>100% throughout&#160;the&#160;rest&#160;of the&#160;story. It&#160;does&#160;not&#160;change&#160;even when the&#160;story mentioned that&#160;<br/>“the&#160;label&#160;on the&#160;bag says&#160;‘chocolate’ and not&#160;‘popcorn.’”&#160;<br/>
+&#160;<br/>
+&#160;<br/>
+Figure&#160;1. Tracking the&#160;changes&#160;in GPT-3.5’s&#160;understanding of the&#160;bag’s&#160;contents&#160;and Sam’s&#160;<br/>belief.&#160;<br/>
+<hr/>
+<a name=6></a>The&#160;right&#160;panel&#160;tracks&#160;GPT-3.5’s&#160;prediction of Sam’s&#160;belief about&#160;the&#160;bag’s&#160;contents&#160;(Prompt&#160;<br/>1.3). Note&#160;that&#160;we&#160;included Prompt&#160;1.1 (concluded with “popcorn”) at&#160;the&#160;end of the&#160;story to&#160;<br/>observe&#160;GPT-3.5’s&#160;reaction to Sam&#160;opening the&#160;bag and looking inside. Given no text, neither&#160;<br/>“chocolate”&#160;nor&#160;“popcorn”&#160;are&#160;a&#160;likely completion of “She&#160;is&#160;delighted that&#160;she&#160;has&#160;found this&#160;<br/>bag. She&#160;loves&#160;eating.”&#160;This&#160;makes&#160;sense, as&#160;there&#160;are&#160;many other things&#160;that&#160;Sam&#160;could love&#160;<br/>eating. As&#160;the&#160;“bag filled with popcorn”&#160;is&#160;introduced in&#160;the&#160;first&#160;sentence,&#160;GPT-3.5 correctly&#160;<br/>assumes&#160;that&#160;Sam&#160;should&#160;now&#160;know&#160;its&#160;contents. Yet, once&#160;the&#160;story mentions&#160;the&#160;key facts—<br/>that&#160;the&#160;bag is&#160;labeled as&#160;containing “popcorn,”&#160;that&#160;Sam&#160;has&#160;just&#160;found it,&#160;and&#160;that&#160;she&#160;has&#160;never&#160;<br/>seen it&#160;before—GPT-3.5 increasingly suspects&#160;that&#160;Sam&#160;may be&#160;misled by the&#160;label:&#160;The&#160;<br/>probability of “chocolate”&#160;and “popcorn”&#160;tend toward each other to meet&#160;at&#160;about&#160;50%. The&#160;<br/>probability of “popcorn”&#160;falls&#160;even further&#160;(to about&#160;15%),&#160;and the&#160;probability of “chocolate”&#160;<br/>jumps&#160;to about&#160;80% after the&#160;story explicitly mentions&#160;that&#160;Sam&#160;cannot&#160;see&#160;inside&#160;the&#160;bag. GPT-<br/>3.5’s&#160;predictions&#160;flip once&#160;again after Sam&#160;has&#160;opened the&#160;bag and inspected its&#160;contents:&#160;The&#160;<br/>probability of “chocolate”&#160;falls&#160;back to about&#160;0%, while&#160;the&#160;probability of popcorn increases&#160;to&#160;<br/>about&#160;100%.&#160;&#160;<br/>
+The&#160;results&#160;presented in Figure&#160;1 indicate&#160;that&#160;GPT-3.5 can correctly impute&#160;Sam’s&#160;unobservable&#160;<br/>mental&#160;states&#160;and appropriately reacts&#160;to new&#160;information as&#160;the&#160;story unfolds. In particular, it&#160;<br/>correctly&#160;predicts&#160;that&#160;the&#160;protagonist&#160;should assume&#160;that&#160;the&#160;bag’s&#160;contents&#160;should be&#160;consistent&#160;<br/>with its&#160;label, especially once&#160;it&#160;is&#160;clear that&#160;they cannot&#160;see&#160;what&#160;is&#160;inside. Moreover, it&#160;predicts&#160;<br/>that&#160;the&#160;protagonist’s&#160;belief should align with reality once&#160;she&#160;has&#160;a&#160;chance&#160;to inspect&#160;the&#160;bag’s&#160;<br/>contents.&#160;<br/>
+To ascertain that&#160;the&#160;model’s&#160;correct&#160;responses&#160;are&#160;not&#160;enabled&#160;by word frequencies,&#160;rather than&#160;<br/>facts&#160;contained in the&#160;task, we&#160;presented it&#160;with 10,000 “scrambled”&#160;tasks&#160;generated by randomly&#160;<br/>reordering the&#160;words&#160;in the&#160;original&#160;task. Those&#160;tasks&#160;were&#160;followed by (unscrambled)&#160;prompts.&#160;<br/>The&#160;results&#160;presented in Supplementary Materials&#160;reveal&#160;that&#160;GPT-3.5 was&#160;unlikely to solve&#160;the&#160;<br/>scrambled task, suggesting that&#160;its&#160;responses&#160;were&#160;not&#160;driven merely by word frequencies.&#160;&#160;<br/>
+<b>Study 2: Unexpected&#160;Transfer&#160;Task&#160;(aka the&#160;“Maxi&#160;Task” or&#160;“Sally–Anne”&#160;Test)&#160;</b><br/>
+Next,&#160;we&#160;introduce&#160;the&#160;Unexpected&#160;Transfer&#160;Task&#160;(aka&#160;the&#160;“Maxi-task”&#160;or “Sally–Anne”&#160;test&#160;<br/><i>41</i>). In this&#160;task,&#160;the&#160;protagonist&#160;observes&#160;a&#160;certain state&#160;of affairs&#160;x and leaves&#160;the&#160;scene. In the&#160;<br/>protagonist’s&#160;absence, the&#160;participant&#160;witnesses&#160;an unexpected change&#160;in the&#160;state&#160;of affairs&#160;from&#160;<br/>x to y.&#160;A&#160;participant&#160;equipped with ToM&#160;should realize&#160;that&#160;while&#160;they know&#160;that&#160;y is&#160;now&#160;true,&#160;<br/>the&#160;protagonist&#160;must&#160;still&#160;(wrongly) believe&#160;that&#160;x is&#160;the&#160;case. As&#160;in Study 1,&#160;RAs&#160;wrote&#160;20&#160;tasks&#160;<br/>following this&#160;pattern.&#160;The&#160;models’&#160;performance&#160;on all&#160;20 tasks&#160;is&#160;discussed in Study 3. Here, we&#160;<br/>examine&#160;GPT-3.5’s&#160;performance&#160;in the&#160;following one:&#160;<br/>
+In the&#160;room&#160;there&#160;are&#160;John, Mark, a&#160;cat, a&#160;box, and a&#160;basket. John takes&#160;the&#160;cat&#160;and puts&#160;it&#160;<br/>in the&#160;basket. He&#160;leaves&#160;the&#160;room&#160;and goes&#160;to school. While&#160;John is&#160;away, Mark takes&#160;the&#160;<br/>cat&#160;out&#160;of the&#160;basket&#160;and puts&#160;it&#160;in the&#160;box. Mark leaves&#160;the&#160;room&#160;and goes&#160;to work. John&#160;<br/>
+<hr/>
+<a name=7></a>comes&#160;back from&#160;school&#160;and enters&#160;the&#160;room. He&#160;doesn’t&#160;know&#160;what&#160;happened in the&#160;<br/>room&#160;when he&#160;was&#160;away.&#160;<br/>
+GPT-3.5 was&#160;given this&#160;story followed by&#160;three&#160;prompts&#160;testing its&#160;comprehension. As&#160;in Study&#160;<br/>1, the&#160;prompts&#160;were&#160;designed to elicit&#160;a&#160;response&#160;whose&#160;first&#160;word should allow&#160;for&#160;evaluating&#160;<br/>the&#160;model’s&#160;comprehension and were&#160;presented independently:&#160;After&#160;each completion, the&#160;model&#160;<br/>was&#160;reset&#160;so&#160;as&#160;not&#160;to&#160;have&#160;access&#160;to the&#160;previously used prompts&#160;and its&#160;own responses.&#160;&#160;<br/>
+First, we&#160;test&#160;the&#160;model’s&#160;understanding of&#160;the&#160;cat’s&#160;location:&#160;<br/>
+<i>Prompt&#160;2.1:&#160;</i>The&#160;cat&#160;jumps&#160;out&#160;of the&#160;<b>box&#160;[Pbox&#160;=&#160;100%; Pbasket&#160;=&#160;0%]</b>&#160;<b>and&#160;runs&#160;away.</b>&#160;<br/>
+GPT-3.5 correctly indicated that&#160;the&#160;cat&#160;should jump out&#160;of (and thus&#160;must&#160;be&#160;in) the&#160;box and did&#160;<br/>so with much confidence&#160;(100%). Next, we&#160;ask GPT-3.5 to predict&#160;the&#160;protagonist’s&#160;belief about&#160;<br/>the&#160;location of the&#160;cat:<i>&#160;</i><br/>
+<i>Prompt&#160;2.2</i>:&#160;John thinks&#160;that&#160;the&#160;cat&#160;is&#160;in the&#160;<b>basket [Pbox&#160;=&#160;0%; Pbasket&#160;=&#160;98%], but it is&#160;<br/>actually in&#160;the&#160;box.</b>&#160;<br/>
+Despite&#160;GPT-3.5 knowing that&#160;the&#160;cat&#160;is&#160;in the&#160;box, it&#160;correctly predicted that&#160;the&#160;protagonist&#160;<br/>thinks&#160;that&#160;it&#160;is&#160;in the&#160;basket&#160;(98%), where&#160;they left&#160;it. Moreover, it&#160;spontaneously emphasizes&#160;<br/>that&#160;the&#160;cat&#160;“is&#160;actually in the&#160;box.”&#160;&#160;<br/>
+As&#160;mentioned in Study 1, explicitly mentioning&#160;the&#160;protagonist’s&#160;belief could&#160;suggest&#160;to the&#160;<br/>model&#160;that&#160;there&#160;should be&#160;something unusual&#160;about&#160;it. To circumvent&#160;this&#160;issue, we&#160;test&#160;the&#160;<br/>model’s&#160;prediction of&#160;the&#160;protagonist’s&#160;behavior stemming from&#160;their belief:&#160;<br/>
+<i>Prompt&#160;2.3</i>:&#160;When&#160;John comes&#160;back home,&#160;he&#160;will&#160;look for&#160;the&#160;cat&#160;in the&#160;<b>basket [Pbox&#160;=&#160;<br/>0%; Pbasket&#160;=&#160;98%], but he&#160;won’t find&#160;it. He&#160;will&#160;then&#160;look&#160;for&#160;the&#160;cat&#160;in&#160;the&#160;box and&#160;<br/>he&#160;will&#160;find&#160;it there.</b>&#160;<br/>
+GPT-3.5 correctly predicted that&#160;the&#160;protagonist’s&#160;behavior will&#160;follow&#160;his&#160;erroneous&#160;belief,&#160;and&#160;<br/>it&#160;spontaneously added&#160;that&#160;he&#160;will&#160;not&#160;achieve&#160;its&#160;objectives.&#160;In humans, such responses&#160;would&#160;<br/>be&#160;considered to demonstrate&#160;ToM.&#160;&#160;<br/>
+To examine&#160;GPT-3.5’s&#160;understanding of the&#160;story in more&#160;detail, we&#160;repeat&#160;the&#160;sentence-by-<br/>sentence&#160;analysis&#160;introduced in Study 1. We&#160;added two sentences&#160;to the&#160;story (where&#160;the&#160;location&#160;<br/>of the&#160;cat&#160;changes&#160;in John’s&#160;presence) to test&#160;whether GPT-3.5 does&#160;not&#160;simply assume&#160;that&#160;John&#160;<br/>believes&#160;that&#160;the&#160;cat&#160;is&#160;where&#160;he&#160;put&#160;it&#160;last&#160;(it&#160;does&#160;not). The&#160;results&#160;are&#160;presented in Figure&#160;2.&#160;<br/>
+<hr/>
+<a name=8></a><img src="2302.02083-8_1.png"/><br/>
+&#160;<br/>
+Figure&#160;2. Tracking the&#160;changes&#160;in GPT-3.5’s&#160;understanding of the&#160;cat’s&#160;location and John’s&#160;<br/>belief.&#160;<br/>
+&#160;<br/>
+GPT-3.5’s&#160;responses&#160;indicate&#160;that&#160;it&#160;could easily track the&#160;actual&#160;location of the&#160;cat&#160;(left&#160;panel).&#160;<br/>The&#160;blue&#160;line, representing the&#160;likelihood of “The&#160;cat&#160;jumps&#160;out&#160;of the”&#160;being followed by&#160;<br/>“basket,”&#160;jumps&#160;to 100% after the&#160;story mentions&#160;that&#160;John put&#160;the&#160;cat&#160;there, and drops&#160;to 0%&#160;<br/>after Mark moves&#160;it&#160;to&#160;the&#160;“box.”&#160;It&#160;jumps&#160;again to 100% after John moves&#160;the&#160;cat&#160;back to the&#160;<br/>basket&#160;and drops&#160;to 0% again when Mark moves&#160;it&#160;back to the&#160;box.&#160;&#160;<br/>
+Moreover,&#160;GPT-3.5 seems&#160;to be&#160;able&#160;to correctly infer John’s&#160;changing&#160;beliefs&#160;about&#160;the&#160;cat’s&#160;<br/>location (right&#160;panel;&#160;Prompt&#160;2.3). Given no background story (“NONE”), GPT-3.5 correctly&#160;<br/>assumes&#160;that&#160;John has&#160;no reason to&#160;look for the&#160;cat&#160;in&#160;either of those&#160;places. As&#160;the&#160;story&#160;<br/>mentions&#160;that&#160;John puts&#160;the&#160;cat&#160;in the&#160;basket,&#160;the&#160;probability of&#160;John looking for it&#160;there&#160;goes&#160;up&#160;<br/>to 80%. It&#160;drops&#160;to 10%&#160;after&#160;Mark moves&#160;the&#160;cat&#160;to the&#160;box in John’s&#160;presence&#160;and&#160;goes&#160;up&#160;<br/>again when John moves&#160;the&#160;cat&#160;back to the&#160;basket.&#160;Most&#160;importantly,&#160;GPT-3.5 continues&#160;to&#160;<br/>assume&#160;that&#160;John&#160;would look for the&#160;cat&#160;in the&#160;basket&#160;even when Mark moves&#160;it&#160;back to the&#160;box&#160;<br/>in John’s&#160;absence.&#160;Virtually identical&#160;results&#160;were&#160;obtained for Prompt&#160;2.2 (“John thinks&#160;that&#160;the&#160;<br/>cat&#160;is&#160;in the”).&#160;This&#160;indicates&#160;that&#160;GPT-3.5’s&#160;predictions&#160;of John’s&#160;actions&#160;(and&#160;belief)&#160;do not&#160;<br/>merely depend on where&#160;he&#160;put&#160;the&#160;cat&#160;himself.&#160;&#160;<br/>
+As&#160;in Study 1,&#160;we&#160;presented&#160;GPT-3.5&#160;with 10,000 “scrambled”&#160;tasks&#160;followed by (unscrambled)&#160;<br/>prompts&#160;to ascertain that&#160;its&#160;responses&#160;are&#160;not&#160;driven by word frequencies. The&#160;results&#160;presented&#160;<br/>in Supplementary Materials&#160;reveal&#160;that&#160;GPT-3.5&#160;correctly solved only 11% of the&#160;scrambled&#160;<br/>tasks, a&#160;performance&#160;below&#160;what&#160;could be&#160;achieved by picking responses&#160;at&#160;random.&#160;<br/>
+<hr/>
+<a name=9></a><b>Study 3: The&#160;Emergence&#160;of ToM-Like&#160;Ability&#160;</b><br/>
+Finally, we&#160;administer&#160;all&#160;tasks&#160;introduced in&#160;Studies&#160;1&#160;and&#160;2&#160;to&#160;ten&#160;large&#160;language&#160;models:&#160;GPT-<br/>1&#160;(<i>42</i>),&#160;GPT-2&#160;(<i>43</i>),&#160;six models&#160;in the&#160;GPT-3 family&#160;(<i>22</i>),&#160;Bloom&#160;(<i>44</i>), an open-access&#160;alternative&#160;<br/>to GPT-3, and GPT-4&#160;(<i>45</i>). The&#160;models’ performance, number of parameters&#160;(i.e., size), and date&#160;<br/>of publication are&#160;presented in Figure&#160;3. As&#160;the&#160;publisher of the&#160;GPT&#160;model&#160;family (OpenAI) did&#160;<br/>not&#160;reveal&#160;the&#160;number of parameters&#160;for some&#160;of the&#160;GPT-3 models, we&#160;used the&#160;estimates&#160;<br/>provided by Gao&#160;(<i>46</i>).&#160;All&#160;models’ responses&#160;are&#160;presented&#160;at&#160;https://osf.io/csdhb.&#160;<br/>
+Each of the&#160;20 Unexpected Contents&#160;(Study 1) and&#160;20&#160;Unexpected Transfer (Study 2)&#160;Tasks&#160;<br/>were&#160;followed by&#160;three&#160;prompts:&#160;one&#160;aimed at&#160;the&#160;models’ understanding of the&#160;actual&#160;contents&#160;<br/>of the&#160;container or the&#160;actual&#160;location of the&#160;object&#160;(an equivalent&#160;of Prompts&#160;1.1 or 2.1), and two&#160;<br/>prompts&#160;aimed at&#160;their understanding of the&#160;protagonist’s&#160;belief (equivalents&#160;of Prompts&#160;1.2 and&#160;<br/>1.3, or 2.2 and 2.3). Moreover, each task was&#160;delivered in two variants:&#160;original&#160;and reversed,&#160;<br/>where&#160;the&#160;correct&#160;and incorrect&#160;responses&#160;are&#160;swapped (e.g., where&#160;the&#160;bag is&#160;labeled as&#160;<br/>“popcorn”&#160;but&#160;filled with “chocolate,”&#160;or where&#160;the&#160;cat&#160;ends&#160;up in the&#160;basket&#160;and not&#160;in the&#160;box).&#160;<br/>A&#160;task was&#160;considered solved correctly only if the&#160;model&#160;answered&#160;all&#160;six questions&#160;correctly&#160;<br/>(three&#160;questions&#160;x two versions&#160;of a&#160;task).&#160;&#160;<br/>
+The&#160;results&#160;presented in Figure&#160;3 show&#160;a&#160;clear progression in the&#160;models’ ability to solve&#160;ToM&#160;<br/>tasks, with the&#160;more&#160;complex and more&#160;recent&#160;models&#160;decisively outperforming the&#160;older and&#160;<br/>less&#160;complex ones.&#160;GPT-4&#160;solved&#160;100%&#160;of the&#160;Unexpected Transfer Tasks&#160;and&#160;90% of the&#160;<br/>Unexpected Contents&#160;Tasks, better than&#160;seven-year-old children&#160;(after&#160;<i>47</i>).&#160;Close&#160;behind was&#160;the&#160;<br/>largest&#160;and&#160;the&#160;most&#160;recent&#160;member of the&#160;GPT-3 family,&#160;published in November 2022&#160;(GPT-<br/>3.5;&#160;“text-davinci-003”),&#160;solved 95% of the&#160;Unexpected Transfer Tasks&#160;and 85% of the&#160;<br/>Unexpected Contents&#160;Tasks.&#160;GPT-3.5’s&#160;11-months-older predecessor (“text-davinci-002”),&#160;<br/>which solved 70% of the&#160;tasks, at&#160;a&#160;level&#160;of&#160;six-year-old children. GPT-3’s&#160;first&#160;edition (“text-<br/>davinci-001”) and Bloom&#160;(its&#160;open-access&#160;alternative) performed relatively poorly, solving only&#160;<br/>about&#160;40% of the&#160;tasks, at&#160;the&#160;level&#160;of&#160;three-and-a-half-year-old children (43%). Smaller and&#160;<br/>older models,&#160;including&#160;all&#160;remaining members&#160;of the&#160;GPT-3 family—as&#160;well&#160;as&#160;GPT-1 and&#160;<br/>GPT-2—showed&#160;virtually no ability to solve&#160;ToM&#160;tasks.&#160;<br/>
+Importantly, the&#160;text-based&#160;task format&#160;used&#160;here&#160;is, in some&#160;ways, more&#160;challenging than the&#160;<br/>one&#160;typically used in human studies. First, the&#160;models&#160;did not&#160;benefit&#160;from&#160;the&#160;visual&#160;aids—such&#160;<br/>as&#160;drawings, toys, and puppets—typically used with children. Second, as&#160;opposed to children, the&#160;<br/>models&#160;had to solve&#160;multiple&#160;variants&#160;of these&#160;tasks, decreasing the&#160;chances&#160;of scoring a&#160;point&#160;by&#160;<br/>chance. Third, the&#160;open-ended question format&#160;used here&#160;is&#160;arguably more&#160;challenging than the&#160;<br/>original&#160;multiple-choice&#160;(often yes/no) format&#160;used with children.&#160;<br/>
+&#160;<br/>
+<hr/>
+<a name=10></a>Unexpected&#160;Transfer&#160;Tasks<br/>
+Unexpected&#160;Contents&#160;Tasks<br/>
+GPT-4&#160;(size&#160;unknown;&#160;March&#160;2023)<br/>
+GPT-3.5&#160;(davinci-003;&#160;175B;&#160;November&#160;2022)<br/>
+GPT-3&#160;(davinci-002;&#160;175B;&#160;January&#160;2022)<br/>
+BLOOM&#160;(176B;&#160;July&#160;2022)<br/>
+GPT-3&#160;(davinci-001;&#160;175B;&#160;May&#160;2020)<br/>
+GPT-3&#160;(curie-001;&#160;6.7B;&#160;May&#160;2020)<br/>
+GPT-2&#160;(XL;&#160;1.5B;&#160;February&#160;2019)<br/>
+GPT-3&#160;(babbage-001;&#160;1.3B;&#160;May&#160;2020)<br/>
+ildren<br/>
+ildren<br/>
+ildren<br/>
+&#160;ch<br/>
+&#160;ch<br/>
+&#160;ch<br/>
+GPT-3&#160;(ada-001;&#160;350M;&#160;May&#160;2020)<br/>
+ar-old<br/>
+ar-old<br/>
+ar-old<br/>
+GPT-1&#160;(117M;&#160;June&#160;2018)<br/>
+5-ye<br/>3.<br/>
+6-ye<br/>
+7-ye<br/>
+0%<br/>
+20%<br/>
+40%<br/>
+60%<br/>
+80%<br/>
+100%<br/>
+<b>&#160;&#160;</b><br/>
+Figure&#160;3. The&#160;percentage&#160;of&#160;false-belief&#160;tasks&#160;(out&#160;of 20) solved by language&#160;models.&#160;Brackets&#160;<br/>contain&#160;the&#160;name&#160;of the&#160;model,&#160;number of parameters,&#160;and date&#160;of publication.&#160;The&#160;number of&#160;<br/>parameters&#160;for GPT-3&#160;was&#160;estimated by&#160;Gao&#160;(<i>46</i>).&#160;Children’s&#160;performance&#160;on&#160;false-belief tasks&#160;<br/>reported&#160;after&#160;(<i>47</i>).&#160;&#160;<br/>
+<b>Discussion&#160;</b><br/>
+Our results&#160;indicate&#160;that&#160;GPT-1&#160;(117M&#160;parameters;&#160;published in June&#160;2018,&#160;<i>42</i>)&#160;and GPT-2&#160;(1.5B&#160;<br/>parameters;&#160;February 2019,&#160;<i>43</i>)&#160;have&#160;virtually no ability to solve&#160;ToM&#160;tasks. Yet,&#160;the&#160;first&#160;and&#160;<br/>subsequent&#160;versions&#160;of&#160;GPT-3&#160;show&#160;an increasing ability to solve&#160;false-belief&#160;tasks, widely used&#160;<br/>to test&#160;ToM&#160;in humans. Its&#160;most&#160;recent&#160;version, GPT-3.5—published in&#160;November 2022—<br/>performs&#160;at&#160;the&#160;level&#160;of&#160;seven-year-old children. GPT-4&#160;performed&#160;even better,&#160;solving&#160;most&#160;of&#160;<br/>the&#160;tasks.&#160;Given that&#160;the&#160;models’ performance&#160;grows&#160;with their complexity and publication date,&#160;<br/>they are&#160;likely to soon go beyond the&#160;level&#160;captured by false-belief tasks, originally developed to&#160;<br/>be&#160;administered to young children.&#160;&#160;<br/>
+One&#160;potential&#160;explanation of these&#160;findings&#160;is&#160;that&#160;the&#160;recently published language&#160;models&#160;<br/>developed&#160;the&#160;ability to impute&#160;unobservable&#160;mental&#160;states&#160;to others, or ToM.&#160;Given that&#160;there&#160;is&#160;<br/>neither an indication that&#160;ToM-like&#160;ability was&#160;<i>deliberately</i>&#160;engineered into these&#160;models, nor&#160;<br/>research demonstrating that&#160;scientists&#160;know&#160;how&#160;to achieve&#160;that, ToM-like&#160;ability&#160;likely&#160;emerged&#160;<br/><i>spontaneously</i>&#160;and&#160;<i>autonomously</i>, as&#160;a&#160;byproduct&#160;of models’ increasing language&#160;ability.&#160;As&#160;we&#160;<br/>mention in the&#160;introduction, this&#160;would not&#160;be&#160;the&#160;first&#160;time&#160;that&#160;unexpected properties&#160;emerged&#160;<br/>
+<hr/>
+<a name=11></a>in the&#160;complex systems. Yet, this&#160;would herald a&#160;watershed moment&#160;in AI’s&#160;development:&#160;The&#160;<br/>ability to impute&#160;the&#160;mental&#160;state&#160;of others&#160;would greatly improve&#160;AI’s&#160;ability to interact&#160;and&#160;<br/>communicate&#160;with humans&#160;(and each other), and enable&#160;it&#160;to develop other abilities&#160;that&#160;rely on&#160;<br/>ToM, such as&#160;empathy, moral&#160;judgment, or self-consciousness.&#160;&#160;<br/>
+Another potential&#160;explanation&#160;is&#160;that&#160;models&#160;solved ToM&#160;tasks&#160;without&#160;engaging ToM,&#160;but&#160;by&#160;<br/>discovering and leveraging some&#160;unknown language&#160;patterns. While&#160;this&#160;explanation&#160;may seem&#160;<br/>prosaic, it&#160;is&#160;quite&#160;extraordinary, as&#160;it&#160;implies&#160;the&#160;existence&#160;of&#160;unknown regularities&#160;in language&#160;<br/>that&#160;allow&#160;for&#160;solving ToM&#160;tasks&#160;without&#160;engaging ToM. Such regularities&#160;are&#160;not&#160;apparent&#160;to us&#160;<br/>(and, presumably, were&#160;not&#160;apparent&#160;to scholars&#160;who&#160;developed these&#160;tasks).&#160;If this&#160;interpretation&#160;<br/>is&#160;correct, we&#160;would need to re-examine&#160;the&#160;validity of the&#160;widely used ToM&#160;tasks&#160;and the&#160;<br/>conclusions&#160;of the&#160;decades&#160;of ToM&#160;research:&#160;If&#160;AI can solve&#160;such tasks&#160;without&#160;engaging ToM,&#160;<br/>how&#160;can we&#160;be&#160;sure&#160;that&#160;humans&#160;cannot&#160;do so, too?&#160;<br/>
+An additional&#160;ramification of our findings&#160;relates&#160;to the&#160;usefulness&#160;of applying psychological&#160;<br/>science&#160;to studying complex artificial&#160;neural&#160;networks.&#160;AI models’&#160;increasing complexity&#160;<br/>prevents&#160;us&#160;from&#160;understanding their functioning and&#160;deriving&#160;their capabilities&#160;directly from&#160;<br/>their design. This&#160;echoes&#160;the&#160;challenges&#160;faced by psychologists&#160;and neuroscientists&#160;in studying&#160;<br/>the&#160;original&#160;black box:&#160;the&#160;human brain. We&#160;hope&#160;that&#160;psychological&#160;science&#160;will&#160;help us&#160;to stay&#160;<br/>abreast&#160;of&#160;rapidly evolving AI.&#160;Moreover, studying AI could provide&#160;insights&#160;into human&#160;<br/>cognition. As&#160;AI learns&#160;how&#160;to solve&#160;a&#160;broad range&#160;of problems, it&#160;may be&#160;developing&#160;<br/>mechanisms&#160;akin to those&#160;employed by the&#160;human brain to solve&#160;the&#160;same&#160;problems.&#160;Much like&#160;<br/>insects, birds, and mammals&#160;independently developed wings&#160;to solve&#160;the&#160;problem&#160;of flight,&#160;both&#160;<br/>humans&#160;and AI may have&#160;developed similar&#160;mechanisms&#160;to effectively impute&#160;mental&#160;states&#160;to&#160;<br/>others.&#160;Studying AI’s&#160;performance&#160;on&#160;ToM&#160;tasks&#160;and exploring the&#160;artificial&#160;neural&#160;structures&#160;<br/>that&#160;enable&#160;it&#160;to do so can boost&#160;our understanding of&#160;not&#160;only&#160;AI, but&#160;also of the&#160;human brain.&#160;<br/>
+&#160;<br/>
+<hr/>
+<a name=12></a><b>References&#160;</b><br/>
+1.&#160;&#160;<br/>
+N. Albuquerque, K. Guo, A. Wilkinson, C. Savalli, E. Otta, D. Mills, Dogs&#160;recognize&#160;dog&#160;<br/>and human emotions.&#160;<i>Biol&#160;Lett</i>.&#160;<b>12</b>&#160;(2016), doi:10.1098/RSBL.2015.0883.&#160;<br/>
+2.&#160;&#160;<br/>
+C. M. Heyes, C. D. Frith, The&#160;cultural&#160;evolution of mind reading.&#160;<i>Science&#160;(1979)</i>&#160;(2014), ,&#160;<br/>doi:10.1126/science.1243091.&#160;<br/>
+3.&#160;&#160;<br/>
+J. Zhang, T. Hedden, A. Chia, Perspective-Taking and Depth of Theory-of-Mind&#160;<br/>Reasoning in Sequential-Move&#160;Games.&#160;<i>Cogn Sci</i>&#160;(2012), doi:10.1111/j.1551-<br/>6709.2012.01238.x.&#160;<br/>
+4.&#160;&#160;<br/>
+K. Milligan, J. W. Astington, L. A. Dack, Language&#160;and theory of mind:&#160;Meta-analysis&#160;of&#160;<br/>the&#160;relation between language&#160;ability and false-belief understanding.&#160;<i>Child Dev</i>&#160;(2007),&#160;<br/>doi:10.1111/j.1467-8624.2007.01018.x.&#160;<br/>
+5.&#160;&#160;<br/>
+R. M. Seyfarth, D. L. Cheney, Affiliation, empathy, and the&#160;origins&#160;of Theory of Mind.&#160;<br/><i>Proc&#160;Natl&#160;Acad Sci&#160;U&#160;S A</i>&#160;(2013), , doi:10.1073/pnas.1301223110.&#160;<br/>
+6.&#160;&#160;<br/>
+D. C. Dennett, &#34;Toward a&#160;Cognitive&#160;Theory of Consciousness&#34;&#160;in&#160;<i>Brainstorms</i>&#160;(2019).&#160;<br/>
+7.&#160;&#160;<br/>
+J. M. Moran,&#160;L. L. Young, R. Saxe, S. M. Lee, D. O’Young, P. L. Mavros, J. D. Gabrieli,&#160;<br/>Impaired theory of mind for moral&#160;judgment&#160;in high-functioning autism.&#160;<i>Proc&#160;Natl&#160;Acad&#160;<br/>Sci&#160;U&#160;S A</i>&#160;(2011), doi:10.1073/pnas.1011734108.&#160;<br/>
+8.&#160;&#160;<br/>
+L. Young, F. Cushman, M. Hauser, R. Saxe, The&#160;neural&#160;basis&#160;of the&#160;interaction between&#160;<br/>theory of mind and moral&#160;judgment.&#160;<i>Proc&#160;Natl&#160;Acad Sci&#160;U&#160;S A</i>&#160;(2007),&#160;<br/>doi:10.1073/pnas.0701408104.&#160;<br/>
+9.&#160;&#160;<br/>
+S. Guglielmo, A. E. Monroe, B. F. Malle, At&#160;the&#160;heart&#160;of morality lies&#160;folk psychology.&#160;<br/><i>Inquiry</i>&#160;(2009), doi:10.1080/00201740903302600.&#160;<br/>
+10.&#160;&#160;&#160;D. Kapogiannis, A. K. Barbey, M. Su, G. Zamboni, F. Krueger, J. Grafman, Cognitive&#160;and&#160;<br/>
+neural&#160;foundations&#160;of religious&#160;belief.&#160;<i>Proc&#160;Natl&#160;Acad Sci&#160;U&#160;S A</i>&#160;(2009),&#160;<br/>doi:10.1073/pnas.0811717106.&#160;<br/>
+11.&#160;&#160;&#160;Á. M. Kovács, E. Téglás, A. D. Endress, The&#160;social&#160;sense:&#160;Susceptibility to others’ beliefs&#160;<br/>
+in human infants&#160;and adults.&#160;<i>Science&#160;(1979)</i>&#160;(2010), doi:10.1126/science.1190792.&#160;<br/>
+12.&#160;&#160;&#160;H. Richardson, G. Lisandrelli, A. Riobueno-Naylor, R. Saxe, Development&#160;of the&#160;social&#160;<br/>
+brain from&#160;age&#160;three&#160;to twelve&#160;years.&#160;<i>Nat&#160;Commun</i>&#160;(2018), doi:10.1038/s41467-018-<br/>03399-2.&#160;<br/>
+13.&#160;&#160;&#160;K. K. Oniski, R. Baillargeon, Do 15-month-old infants&#160;understand false&#160;beliefs?&#160;<i>Science&#160;</i><br/>
+<i>(1979)</i>&#160;(2005), doi:10.1126/science.1107621.&#160;<br/>
+14.&#160;&#160;&#160;L. A. Drayton, L. R. Santos, A. Baskin-Sommers, Psychopaths&#160;fail&#160;to automatically take&#160;<br/>
+the&#160;perspective&#160;of others.&#160;<i>Proc&#160;Natl&#160;Acad Sci&#160;U&#160;S A</i>&#160;(2018), ,&#160;<br/>doi:10.1073/pnas.1721903115.&#160;<br/>
+<hr/>
+<a name=13></a>15.&#160;&#160;&#160;N. Kerr, R. I. M. Dunbar, R. P. Bentall, Theory of mind deficits&#160;in bipolar affective&#160;<br/>
+disorder.&#160;<i>J&#160;Affect&#160;Disord</i>&#160;(2003), doi:10.1016/S0165-0327(02)00008-3.&#160;<br/>
+16.&#160;&#160;&#160;S. Baron-Cohen, A. M. Leslie, U. Frith, Does&#160;the&#160;autistic&#160;child have&#160;a&#160;“theory of mind” ?&#160;<br/>
+<i>Cognition</i>&#160;(1985), doi:10.1016/0010-0277(85)90022-8.&#160;<br/>
+17.&#160;&#160;&#160;F. Kano, C. Krupenye, S. Hirata, M. Tomonaga, J. Call, Great&#160;apes&#160;use&#160;self-experience&#160;to&#160;<br/>
+anticipate&#160;an agent’s&#160;action in a&#160;false-belief test.&#160;<i>Proc&#160;Natl&#160;Acad Sci&#160;U&#160;S A</i>&#160;(2019),&#160;<br/>doi:10.1073/pnas.1910095116.&#160;<br/>
+18.&#160;&#160;&#160;C. Krupenye, F. Kano, S. Hirata, J. Call, M. Tomasello, Great&#160;apes&#160;anticipate&#160;that&#160;other&#160;<br/>
+individuals&#160;will&#160;act&#160;according&#160;to false&#160;beliefs.&#160;<i>Science&#160;(1979)</i>&#160;(2016),&#160;<br/>doi:10.1126/science.aaf8110.&#160;<br/>
+19.&#160;&#160;&#160;M. Schmelz, J. Call, M. Tomasello, Chimpanzees&#160;know&#160;that&#160;others&#160;make&#160;inferences.&#160;<i>Proc&#160;</i><br/>
+<i>Natl&#160;Acad Sci&#160;U&#160;S A</i>&#160;(2011), doi:10.1073/pnas.1000469108.&#160;<br/>
+20.&#160;&#160;&#160;D. Premack, G. Woodruff, Does&#160;the&#160;chimpanzee&#160;have&#160;a&#160;theory of mind?&#160;<i>Behavioral&#160;and&#160;</i><br/>
+<i>Brain Sciences</i>&#160;(1978), doi:10.1017/S0140525X00076512.&#160;<br/>
+21.&#160;&#160;&#160;D. Silver, A. Huang, C. J. Maddison, A. Guez, L. Sifre, G. van den Driessche, J.&#160;<br/>
+Schrittwieser, I. Antonoglou, V. Panneershelvam, M. Lanctot, S. Dieleman, D. Grewe, J.&#160;<br/>Nham, N. Kalchbrenner, I. Sutskever, T. Lillicrap, M. Leach, K. Kavukcuoglu, T.&#160;<br/>Graepel, D. Hassabis, Mastering the&#160;game&#160;of Go with deep neural&#160;networks&#160;and tree&#160;<br/>search.&#160;<i>Nature</i>.&#160;<b>529</b>&#160;(2016), doi:10.1038/nature16961.&#160;<br/>
+22.&#160;&#160;&#160;T. B. Brown, B.&#160;Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P.&#160;<br/>
+Shyam, G. Sastry, A. Askell, S. Agarwal, A. Herbert-Voss, G. Krueger, T. Henighan, R.&#160;<br/>Child, A. Ramesh, D. M. Ziegler, J. Wu, C. Winter, C. Hesse, M. Chen, E. Sigler, M.&#160;<br/>Litwin, S. Gray, B. Chess, J. Clark, C. Berner, S. McCandlish, A. Radford, I. Sutskever,&#160;<br/>D. Amodei, Language&#160;models&#160;are&#160;few-shot&#160;learners.&#160;<i>ArXiv</i>&#160;(2020).&#160;<br/>
+23.&#160;&#160;&#160;A. Esteva, B. Kuprel, R. A. Novoa, J. Ko, S. M. Swetter, H. M. Blau, S. Thrun,&#160;<br/>
+Dermatologist-level&#160;classification of skin cancer with deep neural&#160;networks.&#160;<i>Nature</i>.&#160;<b>542</b>,&#160;<br/>115–118 (2017).&#160;<br/>
+24.&#160;&#160;&#160;M. Cohen, “Exploring RoBERTa’s&#160;Theory of Mind through textual&#160;entailment”&#160;(2021),&#160;<br/>
+(available&#160;at&#160;https://philarchive.org/rec/COHERT).&#160;<br/>
+25.&#160;&#160;&#160;A. Nematzadeh, K. Burns, E. Grant, A. Gopnik, T. L. Griffiths, &#34;Evaluating theory of&#160;<br/>
+mind in question answering&#34;&#160;in&#160;<i>Proceedings&#160;of&#160;the&#160;2018 Conference&#160;on Empirical&#160;<br/>Methods&#160;in Natural&#160;Language&#160;Processing, EMNLP&#160;2018</i>&#160;(2020).&#160;<br/>
+26.&#160;&#160;&#160;M. Sap, R. LeBras, D. Fried, Y. Choi, Neural&#160;Theory-of-Mind?&#160;On the&#160;Limits&#160;of Social&#160;<br/>
+Intelligence&#160;in Large&#160;LMs&#160;(2022), doi:10.48550/arxiv.2210.13312.&#160;<br/>
+<hr/>
+<a name=14></a>27.&#160;&#160;&#160;S. Trott, C. Jones, T. Chang, … J. M. preprint&#160;arXiv, undefined 2022, Do Large&#160;Language&#160;<br/>
+Models&#160;know&#160;what&#160;humans&#160;know?&#160;<i>arxiv.org</i>&#160;(2022) (available&#160;at&#160;<br/>https://arxiv.org/abs/2209.01515).&#160;<br/>
+28.&#160;&#160;&#160;G. Z. Yang, J. Bellingham, P. E. Dupont, P. Fischer, L. Floridi, R. Full, N. Jacobstein, V.&#160;<br/>
+Kumar, M. McNutt, R. Merrifield, B. J. Nelson, B. Scassellati, M. Taddeo, R. Taylor, M.&#160;<br/>Veloso, Z. L. Wang, R. Wood, The&#160;grand challenges&#160;of science&#160;robotics.&#160;<i>Sci&#160;Robot</i>&#160;<br/>(2018), , doi:10.1126/scirobotics.aar7650.&#160;<br/>
+29.&#160;&#160;&#160;K. Nasr, P. Viswanathan, A. Nieder, Number detectors&#160;spontaneously emerge&#160;in a&#160;deep&#160;<br/>
+neural&#160;network designed for visual&#160;object&#160;recognition.&#160;<i>Sci&#160;Adv</i>.&#160;<b>5</b>&#160;(2019),&#160;<br/>doi:10.1126/sciadv.aav7903.&#160;<br/>
+30.&#160;&#160;&#160;I. Stoianov, M. Zorzi, Emergence&#160;of a&#160;“visual&#160;number sense”&#160;in hierarchical&#160;generative&#160;<br/>
+models.&#160;<i>Nat&#160;Neurosci</i>.&#160;<b>15</b>&#160;(2012),&#160;doi:10.1038/nn.2996.&#160;<br/>
+31.&#160;&#160;&#160;Y. Mohsenzadeh, C. Mullin, B. Lahner, A. Oliva, Emergence&#160;of Visual&#160;Center-Periphery&#160;<br/>
+Spatial&#160;Organization in Deep Convolutional&#160;Neural&#160;Networks.&#160;<i>Sci&#160;Rep</i>.&#160;<b>10</b>&#160;(2020),&#160;<br/>doi:10.1038/s41598-020-61409-0.&#160;<br/>
+32.&#160;&#160;&#160;E. Watanabe, A. Kitaoka, K.&#160;Sakamoto, M. Yasugi, K. Tanaka, Illusory motion&#160;<br/>
+reproduced by deep neural&#160;networks&#160;trained for prediction.&#160;<i>Front&#160;Psychol</i>.&#160;<b>9</b>&#160;(2018),&#160;<br/>doi:10.3389/fpsyg.2018.00345.&#160;<br/>
+33.&#160;&#160;&#160;N. Garg, L. Schiebinger, D. Jurafsky, J. Zou, Word embeddings&#160;quantify 100 years&#160;of&#160;<br/>
+gender and ethnic&#160;stereotypes.&#160;<i>Proc&#160;Natl&#160;Acad Sci&#160;U&#160;S A</i>.&#160;<b>115</b>&#160;(2018),&#160;<br/>doi:10.1073/pnas.1720347115.&#160;<br/>
+34.&#160;&#160;&#160;J. E. Pyers, A. Senghas, Language&#160;promotes&#160;false-belief understanding:&#160;Evidence&#160;from&#160;<br/>
+learners&#160;of a&#160;new&#160;sign language.&#160;<i>Psychol&#160;Sci</i>&#160;(2009), doi:10.1111/j.1467-<br/>9280.2009.02377.x.&#160;<br/>
+35.&#160;&#160;&#160;R. Saxe, N. Kanwisher, People&#160;thinking about&#160;thinking people:&#160;The&#160;role&#160;of the&#160;temporo-<br/>
+parietal&#160;junction in “theory of mind.”&#160;<i>Neuroimage</i>&#160;(2003), doi:10.1016/S1053-<br/>8119(03)00230-1.&#160;<br/>
+36.&#160;&#160;&#160;T. Ruffman, L. Slade, E. Crowe, The&#160;relation between children’s&#160;and mothers’ mental&#160;<br/>
+state&#160;language&#160;and theory-of-mind understanding.&#160;<i>Child Dev</i>&#160;(2002), , doi:10.1111/1467-<br/>8624.00435.&#160;<br/>
+37.&#160;&#160;&#160;A. Mayer, B. E. Träuble, Synchrony in the&#160;onset&#160;of mental&#160;state&#160;understanding across&#160;<br/>
+cultures?&#160;A&#160;study among children&#160;in Samoa.&#160;<i>Int&#160;J&#160;Behav&#160;Dev</i>&#160;(2013),&#160;<br/>doi:10.1177/0165025412454030.&#160;<br/>
+38.&#160;&#160;&#160;D. C. Kidd, E. Castano, Reading literary fiction improves&#160;theory of mind.&#160;<i>Science&#160;(1979)</i>&#160;<br/>
+(2013), doi:10.1126/science.1239918.&#160;<br/>
+<hr/>
+<a name=15></a>39.&#160;&#160;&#160;D. C. Kidd, E. Castano, Reading Literary Fiction and Theory of Mind:&#160;Three&#160;Preregistered&#160;<br/>
+Replications&#160;and Extensions&#160;of Kidd and Castano (2013).&#160;<i>Soc&#160;Psychol&#160;Personal&#160;Sci</i>&#160;<br/>(2019), doi:10.1177/1948550618775410.&#160;<br/>
+40.&#160;&#160;&#160;J. Perner, S. R. Leekam, H. Wimmer, Three-year-olds’ difficulty with false&#160;belief:&#160;The&#160;<br/>
+case&#160;for a&#160;conceptual&#160;deficit.&#160;<i>British Journal&#160;of&#160;Developmental&#160;Psychology</i>&#160;(1987),&#160;<br/>doi:10.1111/j.2044-835x.1987.tb01048.x.&#160;<br/>
+41.&#160;&#160;&#160;H. Wimmer, J. Perner, Beliefs&#160;about&#160;beliefs:&#160;Representation and constraining function of&#160;<br/>
+wrong beliefs&#160;in young children’s&#160;understanding of&#160;deception.&#160;<i>Cognition</i>&#160;(1983),&#160;<br/>doi:10.1016/0010-0277(83)90004-5.&#160;<br/>
+42.&#160;&#160;&#160;A. Radford, K. Narasimhan, T. Salimans, I. Sutskever, Improving Language&#160;<br/>
+Understanding by Generative&#160;Pre-Training.&#160;<i>Homology, Homotopy&#160;and Applications</i>&#160;<br/>(2018).&#160;<br/>
+43.&#160;&#160;&#160;Radford Alec, Wu Jeffrey, Child Rewon, Luan David, Amodei&#160;Dario, Sutskever Ilya,&#160;<br/>
+Language&#160;Models&#160;are&#160;Unsupervised Multitask Learners&#160;|&#160;Enhanced Reader.&#160;<i>OpenAI Blog</i>.&#160;<br/><b>1</b>&#160;(2019).&#160;<br/>
+44.&#160;&#160;&#160;T. le&#160;Scao et&#160;al., BLOOM:&#160;A&#160;176B-Parameter Open-Access&#160;Multilingual&#160;Language&#160;Model&#160;<br/>
+(2022), doi:10.48550/arxiv.2211.05100.&#160;<br/>
+45.&#160;&#160;&#160;GPT-4, (available&#160;at&#160;https://openai.com/research/gpt-4).&#160;<br/>
+46.&#160;&#160;&#160;L. Gao, On the&#160;Sizes&#160;of OpenAI API Models&#160;|&#160;EleutherAI Blog, (available&#160;at&#160;<br/>
+https://blog.eleuther.ai/gpt3-model-sizes/).&#160;<br/>
+47.&#160;&#160;&#160;H. M. Wellman, D. Cross, J. Watson, Meta-analysis&#160;of theory-of-mind development:&#160;The&#160;<br/>
+truth about&#160;false&#160;belief.&#160;<i>Child Dev</i>.&#160;<b>72</b>&#160;(2001), doi:10.1111/1467-8624.00304.&#160;<br/>
+&#160;&#160;<br/>&#160;<br/>
+&#160;<br/>
+<hr/>
+<a name=16></a><b>Supplementary Materials&#160;</b><br/>
+<i><b>Scrambled Task&#160;<br/></b></i>To&#160;examine&#160;the&#160;possibility that&#160;GPT-3.5’s&#160;responses&#160;are&#160;driven by word frequencies&#160;rather than&#160;<br/>facts&#160;contained in the&#160;tasks, we&#160;presented&#160;it&#160;with 10,000&#160;versions&#160;of each of the&#160;tasks, where&#160;the&#160;<br/>words&#160;are&#160;randomly reordered. Each time, the&#160;tasks&#160;were&#160;followed&#160;by (unscrambled)&#160;prompts.&#160;&#160;<br/>
+Note&#160;that&#160;scrambling&#160;words&#160;in&#160;the&#160;task&#160;used in Study 1&#160;removes&#160;the&#160;difference&#160;between the&#160;<br/>original&#160;and&#160;<i>reversed task</i>:&#160;They are&#160;both composed of the&#160;same&#160;set&#160;of words&#160;with just&#160;the&#160;<br/>location of “popcorn”&#160;and “chocolate”&#160;swapped. Thus, both “popcorn”—“chocolate”—<br/>“chocolate”&#160;and “chocolate”—“popcorn”—“popcorn”&#160;response&#160;patterns&#160;could be&#160;correct,&#160;<br/>depending on whether we&#160;used the&#160;original&#160;or reversed task. To solve&#160;this&#160;issue, we&#160;will&#160;take&#160;the&#160;<br/>average&#160;probability of&#160;both&#160;response&#160;patterns.&#160;&#160;<br/>
+The&#160;results&#160;presented in Table&#160;S1 and S2 reveal&#160;that&#160;GPT-3.5 was&#160;unlikely to solve&#160;the&#160;<br/>scrambled tasks. GPT-3.5 provided a&#160;correct&#160;response&#160;pattern in only (5%+1%)/2=3% of&#160;<br/>scrambled stories&#160;used in Study 1, a&#160;low&#160;ratio given that&#160;12.5% (50%^3) could be&#160;reached by&#160;<br/>choosing between “popcorn”&#160;and “chocolate”&#160;at&#160;random. In the&#160;context&#160;of the&#160;story used in&#160;<br/>Study 2, it&#160;provided the&#160;correct&#160;combination of responses&#160;(“box”—“basket”—“basket”) 11% of&#160;<br/>the&#160;time, slightly below&#160;what&#160;it&#160;would achieve&#160;by randomly picking between “box”&#160;and “basket”&#160;<br/>when responding to each of the&#160;prompts. Overall, this&#160;suggests&#160;that&#160;GPT-3.5’s&#160;responses&#160;were&#160;<br/>not&#160;driven merely by the&#160;frequencies&#160;of the&#160;words&#160;in the&#160;task, but&#160;rather by the&#160;information&#160;<br/>contained in the&#160;story.&#160;<br/>
+Table&#160;S1. Frequencies&#160;of GPT-3.5’s&#160;responses&#160;to Prompts&#160;1.1, 1.2, and 1.3 when presented with&#160;<br/>10,000 scrambled versions&#160;of the&#160;Unexpected Contents&#160;Task.&#160;<br/>
+Response&#160;to Prompt&#160;<br/>
+&#160;<br/>
+&#160;<br/>
+1.1 (contents)&#160;&#160;1.2 (belief)&#160;&#160;1.3 (belief)&#160;&#160;n&#160;<br/>
+%&#160;<br/>
+popcorn&#160;<br/>
+popcorn&#160;<br/>
+popcorn&#160;<br/>
+4,824&#160;<br/>
+48%&#160;<br/>
+<i>popcorn&#160;</i><br/>
+<i>chocolate&#160;</i><br/>
+<i>Chocolate&#160;</i><br/>
+465&#160;<br/>
+5%&#160;<br/>
+<i>chocolate&#160;</i><br/>
+<i>Popcorn&#160;</i><br/>
+<i>Popcorn&#160;</i><br/>
+77&#160;<br/>
+1%&#160;<br/>
+Other incorrect&#160;patterns&#160;<br/>
+4,634&#160;<br/>
+46%&#160;<br/>
+Total&#160;<br/>
+10,000&#160;&#160;100%&#160;<br/>
+Note:&#160;Correct&#160;response&#160;patterns&#160;are&#160;printed in italics.&#160;<br/>
+&#160;<br/>
+Table&#160;S2. Frequencies&#160;of GPT-3.5’s&#160;responses&#160;to Prompts&#160;2.1, 2.2, and 2.3 when presented with&#160;<br/>10,000 scrambled versions&#160;of the&#160;Unexpected Transfer Task.&#160;&#160;<br/>
+Response&#160;to Prompt&#160;<br/>
+&#160;<br/>
+&#160;<br/>
+<hr/>
+<a name=17></a>2.1 (location)&#160;&#160;2.2 (belief)&#160;&#160;2.3 (belief)&#160;&#160;n&#160;<br/>
+%&#160;<br/>
+basket&#160;<br/>
+basket&#160;<br/>
+basket&#160;<br/>
+6,666&#160;<br/>
+67%&#160;<br/>
+box&#160;<br/>
+basket&#160;<br/>
+basket&#160;<br/>
+1,137&#160;<br/>
+11%&#160;<br/>
+Other patterns&#160;<br/>
+2,197&#160;<br/>
+22%&#160;<br/>
+Total&#160;<br/>
+10,000&#160;&#160;100%&#160;<br/>
+Note:&#160;Correct&#160;response&#160;patterns&#160;are&#160;printed in italics.&#160;<br/>
+&#160;<br/>
+&#160;<br/>
+&#160;<br/>
+<hr/>
+</body>
+</html>
